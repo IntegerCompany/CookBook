@@ -5,7 +5,8 @@
     <color name="colorAccent">#F57F17</color>
 
     <color name="white">#FFFFFF</color>
-    <color name="base_dark">#FF383838</color>
-    <color name="light_gray">#FFF0F0F0</color>
+    <color name="main_dark">#FF383838</color>
+    <color name="secondary_text">#FF8D8D8D</color>
+    <color name="light_dark">#AAAAAA</color>
     <color name="black">#000000</color>
 </resources>

@@ -21,12 +21,12 @@
                 android:layout_alignParentLeft="true"
                 android:textSize="10sp"
                 android:layout_below="@+id/tv_dish_type"
-                android:textColor="@color/base_dark"
+                android:textColor="@color/main_dark"
                 android:text="some empty description, this was setted from xml"
-                android:paddingLeft="8dp"
-                android:paddingTop="8dp"
-                android:paddingRight="8dp"
-                android:paddingBottom="8dp" />
+                android:paddingLeft="12dp"
+                android:paddingTop="12dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="12dp" />
 
             <ImageView
                 android:layout_width="match_parent"
@@ -36,7 +36,8 @@
                 android:scaleType="centerCrop"
                 android:src="#FF0000"
                 android:adjustViewBounds="true"
-                android:layout_below="@+id/tv_dish_name" />
+                android:layout_below="@+id/tv_dish_name"
+                android:visibility="visible" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -59,7 +60,7 @@
                 android:layout_below="@+id/image_recipe"
                 android:layout_marginLeft="12dp"
                 android:src="@drawable/energy"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="12dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -72,8 +73,8 @@
                 android:layout_toEndOf="@+id/image_calories"
                 android:gravity="center_vertical"
                 android:textSize="10sp"
-                android:layout_marginTop="8dp"
-                android:textColor="@color/base_dark"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/main_dark"
                 android:layout_marginLeft="4dp" />
 
             <TextView
@@ -88,7 +89,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginRight="12dp"
                 android:textSize="10sp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginLeft="4dp" />
 
             <ImageView
@@ -99,7 +100,7 @@
                 android:layout_below="@+id/image_recipe"
                 android:layout_alignParentRight="false"
                 android:layout_toLeftOf="@+id/tv_dish_time"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="12dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -111,8 +112,7 @@
                 android:layout_toRightOf="@+id/image_dish_type"
                 android:layout_alignTop="@+id/image_dish_type"
                 android:textSize="10sp"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="12dp"
                 android:layout_marginLeft="4dp"
                 android:textStyle="bold" />
 
@@ -127,8 +127,8 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/default_divider_height"
-                android:background="@color/base_dark"
+                android:layout_height="1px"
+                android:background="@color/light_dark"
                 android:layout_alignTop="@+id/tv_dish_description"></FrameLayout>
 
             <FrameLayout
@@ -139,8 +139,8 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/default_divider_height"
-                android:background="@color/base_dark"
+                android:layout_height="1px"
+                android:background="@color/light_dark"
                 android:layout_alignBottom="@+id/tv_dish_description" />
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -151,7 +151,7 @@
                 android:layout_below="@+id/tv_dish_description"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:layout_marginLeft="8dp" />
+                android:layout_marginLeft="12dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -162,7 +162,8 @@
                 android:layout_toRightOf="@+id/image_user_avatar"
                 android:layout_alignTop="@+id/image_user_avatar"
                 android:textSize="10sp"
-                android:layout_marginLeft="4dp" />
+                android:layout_marginLeft="4dp"
+                android:textColor="@color/secondary_text" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -170,11 +171,12 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="HOT COOK"
                 android:id="@+id/tv_user_status"
-                android:textSize="8sp"
+                android:textSize="6dp"
                 android:layout_below="@+id/tv_username"
                 android:layout_toRightOf="@+id/image_user_avatar"
                 android:layout_toEndOf="@+id/image_user_avatar"
-                android:layout_marginLeft="4dp" />
+                android:layout_marginLeft="4dp"
+                android:textColor="@color/main_dark" />
 
         </RelativeLayout>
 

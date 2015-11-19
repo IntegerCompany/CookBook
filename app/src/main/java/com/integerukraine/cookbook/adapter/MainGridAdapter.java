@@ -67,22 +67,23 @@ public class MainGridAdapter extends RecyclerView.Adapter<MainGridAdapter.TrackV
             layoutParams.topMargin = Convertations.dpToPx(8, holder.itemView.getContext());
             holder.cardRecipe.setLayoutParams(layoutParams);
         }
+        holder.cardRecipe.setRadius(12);
     }
     /**
      * Used to work with fonts of view
      */
     private void initFonts(ParseObject recipe, TrackViewHolder holder, int position) {
         Typeface arialBlack = Typeface.createFromAsset(holder.itemView.getContext().getAssets(), "fonts/arial_black.ttf");
-        Typeface rubik300 = Typeface.createFromAsset(holder.itemView.getContext().getAssets(), "fonts/rubik_300.ttf");
+        Typeface helveticaNeue = Typeface.createFromAsset(holder.itemView.getContext().getAssets(), "fonts/helvetica_neue.ttf");
 
         holder.tvDishCalories.setTypeface(arialBlack);
         holder.tvDishTime.setTypeface(arialBlack);
         holder.tvDishType.setTypeface(arialBlack);
         holder.tvUsername.setTypeface(arialBlack);
 
-        holder.tvDescription.setTypeface(rubik300);
-        holder.tvDishCalories.setTypeface(rubik300);
-        holder.tvDishName.setTypeface(rubik300);
+        holder.tvDescription.setTypeface(helveticaNeue);
+        holder.tvDishCalories.setTypeface(helveticaNeue);
+        holder.tvDishName.setTypeface(helveticaNeue);
     }
 
     private void initTextViews(ParseObject recipe, TrackViewHolder holder, int position) {
