@@ -31,6 +31,8 @@ public class MainGridAdapter extends RecyclerView.Adapter<MainGridAdapter.TrackV
     ArrayList<ParseObject> recipes = new ArrayList<>();
 
     int columns;
+    Typeface arialBlack;
+    Typeface helveticaNeue;
 
     public MainGridAdapter(int columns){
         this.columns = columns;
@@ -39,6 +41,8 @@ public class MainGridAdapter extends RecyclerView.Adapter<MainGridAdapter.TrackV
     @Override
     public TrackViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_main_grid_recipe, parent, false);
+        arialBlack = Typeface.createFromAsset(parent.getContext().getAssets(), "fonts/arial_black.ttf");
+        helveticaNeue = Typeface.createFromAsset(parent.getContext().getAssets(), "fonts/helvetica_neue.ttf");
         return new TrackViewHolder(view);
     }
 
@@ -50,6 +54,7 @@ public class MainGridAdapter extends RecyclerView.Adapter<MainGridAdapter.TrackV
             initFonts(recipe, holder, position);
             initTextViews(recipe, holder, position);
             initImages(recipe, holder, position);
+            initListeners(recipe, holder, position);
 
 
 
@@ -73,8 +78,6 @@ public class MainGridAdapter extends RecyclerView.Adapter<MainGridAdapter.TrackV
      * Used to work with fonts of view
      */
     private void initFonts(ParseObject recipe, TrackViewHolder holder, int position) {
-        Typeface arialBlack = Typeface.createFromAsset(holder.itemView.getContext().getAssets(), "fonts/arial_black.ttf");
-        Typeface helveticaNeue = Typeface.createFromAsset(holder.itemView.getContext().getAssets(), "fonts/helvetica_neue.ttf");
 
         holder.tvDishCalories.setTypeface(arialBlack);
         holder.tvDishTime.setTypeface(arialBlack);
@@ -105,6 +108,15 @@ public class MainGridAdapter extends RecyclerView.Adapter<MainGridAdapter.TrackV
                         recipe.getParseObject(ParseKey.Recipe.GRID_IMAGE).getJSONArray(ParseKey.Image.RESOLUTION).getInt(1))
                 .crossFade()
                 .into(holder.imageRecipe);
+    }
+
+    private void initListeners(ParseObject recipe, final TrackViewHolder holder, int position){
+        holder.cardRecipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // holder.itemView.getContext().startActivity(new Intent(holder.itemView.getContext(), Scr.class));
+            }
+        });
     }
 
 

@@ -11,7 +11,7 @@ public class ParseKey {
     public class Recipe {
 
         public static final String DISH_NAME = "dishName";
-        public static final String DESCRIPTION = "description";
+        public static final String DESCRIPTION = "recipeDescription";
         public static final String COOK_TIME = "cookTime";
         public static final String CALORIES = "calories";
         public static final String PERSON_COUNT = "personCount";

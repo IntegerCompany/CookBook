@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     MainGridAdapter mainGridAdapter;
     StaggeredGridLayoutManager gridLayoutManager;
 
-    //Primitives
+    //4
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
     private void initToolBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
+
     }
 
 
