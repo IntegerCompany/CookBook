@@ -2,6 +2,7 @@ package com.integerukraine.cookbook;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.view.View;
 
 import com.integerukraine.cookbook.adapter.MainGridAdapter;
 import com.integerukraine.cookbook.parse.ParseKey;
+import com.integerukraine.cookbook.utils.EndlessRecyclerOnScrollListener;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -35,7 +37,9 @@ public class MainActivity extends AppCompatActivity {
     MainGridAdapter mainGridAdapter;
     StaggeredGridLayoutManager gridLayoutManager;
 
-    //4
+    //Scrolling pagination values
+    private boolean loadingLocked = false;
+    int itemsPerRequest = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         initDrawerLayout();
         initLists();
         setUiListeners();
-
+        queryForParseDate();
 
 
 
@@ -82,21 +86,37 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 switch (v.getId()){
                     case R.id.fab:
-                        queryForParseDate();
+                        Snackbar.make(fab, "Please add to me some useful action", Snackbar.LENGTH_SHORT)
+                                .setAction("Action", null).show();
                         break;
                 }
 
             }
         };
+        mainGrid.addOnScrollListener(new EndlessRecyclerOnScrollListener(gridLayoutManager) {
+            @Override
+            public void onLoadMore(int current_page) {
+                queryForParseDate();
+            }
+        });
+
+
 
         fab.setOnClickListener(buttonsListener);
     }
 
     private void queryForParseDate(){
+
+
         ParseQuery<ParseObject> query = ParseQuery.getQuery(ParseKey.RECIPE);
         query.include(ParseKey.Recipe.GRID_IMAGE);
+        query.addAscendingOrder("createdAt");
+        query.setLimit(itemsPerRequest);
+        query.setSkip(mainGridAdapter.getItemCount() - 1);
+        query.whereGreaterThan("createdAt", mainGridAdapter.getFirstRecipeDate());
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> scoreList, ParseException e) {
+                loadingLocked = false;
                 if (e == null) {
                     // RESULT - OK
                     ArrayList<ParseObject> arrayList = new ArrayList<>();

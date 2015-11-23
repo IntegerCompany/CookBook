@@ -23,6 +23,7 @@ import com.parse.ParseObject;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -46,6 +47,8 @@ public class MainGridAdapter extends RecyclerView.Adapter<MainGridAdapter.TrackV
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_main_grid_recipe, parent, false);
         arialBlack = Typeface.createFromAsset(parent.getContext().getAssets(), "fonts/arial_black.ttf");
         helveticaNeue = Typeface.createFromAsset(parent.getContext().getAssets(), "fonts/helvetica_neue.ttf");
+
+
         return new TrackViewHolder(view);
     }
 
@@ -121,7 +124,7 @@ public class MainGridAdapter extends RecyclerView.Adapter<MainGridAdapter.TrackV
         holder.cardRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               holder.itemView.getContext().startActivity(new Intent(holder.itemView.getContext(), RecipeActivity.class));
+                holder.itemView.getContext().startActivity(new Intent(holder.itemView.getContext(), RecipeActivity.class));
             }
         });
     }
@@ -136,6 +139,16 @@ public class MainGridAdapter extends RecyclerView.Adapter<MainGridAdapter.TrackV
         int recipesSize = recipes.size();
         recipes.addAll(items);
         notifyItemRangeInserted(recipesSize, items.size());
+    }
+
+    public Date getFirstRecipeDate(){
+        if (recipes.isEmpty()) return new Date(0);
+        return recipes.get(0).getCreatedAt();
+    }
+
+    public Date getLastRecipeDate(){
+        if (recipes.isEmpty()) return new Date(99999999999999l);
+        return recipes.get(recipes.size() - 1).getCreatedAt();
     }
 
 
