@@ -14,6 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.integerukraine.cookbook.R;
 import com.integerukraine.cookbook.RecipeActivity;
 import com.integerukraine.cookbook.parse.ParseKey;
@@ -105,18 +108,37 @@ public class MainGridAdapter extends RecyclerView.Adapter<MainGridAdapter.TrackV
 
     }
 
-    private void initImages(ParseObject recipe, TrackViewHolder holder, int position) throws JSONException {
+    private void initImages(final ParseObject recipe, final TrackViewHolder holder, int position) throws JSONException {
+        //Creating layout params for color placeholder
         ViewGroup.LayoutParams params = holder.imageRecipe.getLayoutParams();
+        params.width = recipe.getParseObject(ParseKey.Recipe.GRID_IMAGE).getJSONArray(ParseKey.Image.RESOLUTION).getInt(0);
         params.height = recipe.getParseObject(ParseKey.Recipe.GRID_IMAGE).getJSONArray(ParseKey.Image.RESOLUTION).getInt(1);
-
         holder.imageRecipe.setLayoutParams(params);
+        //Setting dish color to image background
+        holder.imageRecipe.setBackground(new ColorDrawable(Color.parseColor(recipe.getParseObject(ParseKey.Recipe.GRID_IMAGE).getString(ParseKey.Image.COLOR))));
+
         Glide.with(holder.itemView.getContext())
                 .load(recipe.getParseObject(ParseKey.Recipe.GRID_IMAGE).getString(ParseKey.Image.URL))
                 .centerCrop()
-                .placeholder(new ColorDrawable(Color.parseColor(recipe.getParseObject(ParseKey.Recipe.GRID_IMAGE).getString(ParseKey.Image.COLOR))))
                 .override(recipe.getParseObject(ParseKey.Recipe.GRID_IMAGE).getJSONArray(ParseKey.Image.RESOLUTION).getInt(0),
                         recipe.getParseObject(ParseKey.Recipe.GRID_IMAGE).getJSONArray(ParseKey.Image.RESOLUTION).getInt(1))
                 .crossFade()
+                .listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        //Setting image view to WRAP_CONTENT height
+                        ViewGroup.LayoutParams params = holder.imageRecipe.getLayoutParams();
+                        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                        params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                        holder.imageRecipe.setLayoutParams(params);
+                        return false;
+                    }
+                })
                 .into(holder.imageRecipe);
     }
 
@@ -129,7 +151,6 @@ public class MainGridAdapter extends RecyclerView.Adapter<MainGridAdapter.TrackV
         });
     }
 
-
     @Override
     public int getItemCount() {
         return recipes.size();
@@ -141,16 +162,11 @@ public class MainGridAdapter extends RecyclerView.Adapter<MainGridAdapter.TrackV
         notifyItemRangeInserted(recipesSize, items.size());
     }
 
-    public Date getFirstRecipeDate(){
+    // Used for pagination
+    public Date getFirstRecipeDate() {
         if (recipes.isEmpty()) return new Date(0);
         return recipes.get(0).getCreatedAt();
     }
-
-    public Date getLastRecipeDate(){
-        if (recipes.isEmpty()) return new Date(99999999999999l);
-        return recipes.get(recipes.size() - 1).getCreatedAt();
-    }
-
 
     class TrackViewHolder extends RecyclerView.ViewHolder {
         TextView tvDishName, tvDescription, tvDishType, tvDishCalories, tvDishTime, tvUsername, tvUserStatus;
