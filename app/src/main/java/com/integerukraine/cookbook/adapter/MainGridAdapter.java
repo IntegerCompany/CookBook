@@ -1,7 +1,9 @@
 package com.integerukraine.cookbook.adapter;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.integerukraine.cookbook.R;
+import com.integerukraine.cookbook.RecipeActivity;
 import com.integerukraine.cookbook.parse.ParseKey;
 import com.integerukraine.cookbook.utils.Convertations;
 import com.parse.ParseObject;
@@ -100,10 +103,14 @@ public class MainGridAdapter extends RecyclerView.Adapter<MainGridAdapter.TrackV
     }
 
     private void initImages(ParseObject recipe, TrackViewHolder holder, int position) throws JSONException {
+        ViewGroup.LayoutParams params = holder.imageRecipe.getLayoutParams();
+        params.height = recipe.getParseObject(ParseKey.Recipe.GRID_IMAGE).getJSONArray(ParseKey.Image.RESOLUTION).getInt(1);
+
+        holder.imageRecipe.setLayoutParams(params);
         Glide.with(holder.itemView.getContext())
                 .load(recipe.getParseObject(ParseKey.Recipe.GRID_IMAGE).getString(ParseKey.Image.URL))
                 .centerCrop()
-                .placeholder(R.color.colorAccent)
+                .placeholder(new ColorDrawable(Color.parseColor(recipe.getParseObject(ParseKey.Recipe.GRID_IMAGE).getString(ParseKey.Image.COLOR))))
                 .override(recipe.getParseObject(ParseKey.Recipe.GRID_IMAGE).getJSONArray(ParseKey.Image.RESOLUTION).getInt(0),
                         recipe.getParseObject(ParseKey.Recipe.GRID_IMAGE).getJSONArray(ParseKey.Image.RESOLUTION).getInt(1))
                 .crossFade()
@@ -114,7 +121,7 @@ public class MainGridAdapter extends RecyclerView.Adapter<MainGridAdapter.TrackV
         holder.cardRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // holder.itemView.getContext().startActivity(new Intent(holder.itemView.getContext(), Scr.class));
+               holder.itemView.getContext().startActivity(new Intent(holder.itemView.getContext(), RecipeActivity.class));
             }
         });
     }
