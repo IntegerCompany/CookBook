@@ -34,4 +34,6 @@ dependencies {
     compile files('libs/Parse-1.11.0.jar')
 //    CircleImageView
     compile 'de.hdodenhof:circleimageview:2.0.0'
+//    Realm database
+    compile 'io.realm:realm-android:0.85.0'
 }
